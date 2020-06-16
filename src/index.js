@@ -11,6 +11,7 @@ const checkUserIsAuthenticated = require('./middlewares/checkUserIsAuthenticated
 //routers
 const journalRouter = require("./routers/journal-router");
 const authRouter = require("./routers/auth-router");
+const meditationRouter = require('./routers/meditation-router');
 
 
 //mongodb
@@ -33,6 +34,7 @@ app.listen(3000, async () => {
     db = await connectionAccount.db("meditation-app"); // make a cluster
     let journals = await db.createCollection("journals"); // make a collection
     let users = await db.createCollection("users"); // make a collection
+    let meditationListened = await db.createCollection("meditationListened"); // make a collection
     await db.collection("users").createIndex({ username: 1 }, { unique: true });
   
     console.log("listening oon port bannana 300");
@@ -56,5 +58,6 @@ const passDBToRouter =  (req,res,next)=>{
 
 app.use('/journals/',passDBToRouter, checkUserIsAuthenticated, journalRouter);
 app.use('/auth/',passDBToRouter, authRouter);
+app.use('/meditation/', passDBToRouter,checkUserIsAuthenticated, meditationRouter)
 
 module.exports = app;
