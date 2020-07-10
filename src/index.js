@@ -17,7 +17,8 @@ const meditationRouter = require('./routers/meditation-router');
 //mongodb
 const MongoClient = require("mongodb").MongoClient;
 var connectionAccount;
-const connectToMongo = require('./db/mongo_client_db')
+const connectToMongo = require('./db/mongo_client_db');
+const moodsRouter = require("./routers/moods-rotuer");
 
 let db;
 app.listen(3000, async () => {
@@ -59,5 +60,6 @@ const passDBToRouter =  (req,res,next)=>{
 app.use('/journals/',passDBToRouter, checkUserIsAuthenticated, journalRouter);
 app.use('/auth/',passDBToRouter, authRouter);
 app.use('/meditation/', passDBToRouter,checkUserIsAuthenticated, meditationRouter)
+app.use('/moods/',passDBToRouter, checkUserIsAuthenticated, moodsRouter);
 
 module.exports = app;

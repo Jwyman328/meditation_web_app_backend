@@ -18,6 +18,7 @@ const checkUserIsAuthenticated = require('./middlewares/checkUserIsAuthenticated
 //routers
 const journalRouter = require("./routers/journal-router");
 const authRouter = require("./routers/auth-router");
+const moodsRouter = require("./routers/moods-rotuer");
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -72,6 +73,8 @@ app.use(function(req, res, next) {
 });
 
 app.use('/journals/',passDBToRouter, checkUserIsAuthenticated, journalRouter);
+app.use('/moods/',passDBToRouter, checkUserIsAuthenticated, moodsRouter);
+
 app.use('/auth/',passDBToRouter, authRouter);
 
 module.exports = app;

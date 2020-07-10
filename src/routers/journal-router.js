@@ -3,8 +3,10 @@ const journalRouter = new express.Router();
 const journalModel = require("../models/journal");
 const addTodaysDateToJournalData = require("./utils/addTodaysDateToJournalData");
 const createDateOneWeekAgoToday = require('./utils/createDateOneWeekAgoToday');
+
 journalRouter.post("/", async (req, res) => {
   try {
+    console.log('journal hit',req.body)
     let journalDataWithTodaysDate = addTodaysDateToJournalData(req.body);
     const journalData = await journalModel.validateAsync(req.body);
     let createJournal = await req.db.collection("journals").insertOne({
@@ -12,7 +14,7 @@ journalRouter.post("/", async (req, res) => {
       ...journalData,
     });
     res.status(201);
-    res.send("journal created");
+    res.json("journal created");
   } catch (e) {
     console.log(e);
     res.status(400);
