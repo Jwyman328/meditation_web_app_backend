@@ -19,4 +19,15 @@ meditationRouter.post('/record-session-listened',async(req, res) =>{
     }
 })
 
+meditationRouter.get('/',async(req, res) =>{
+    try{
+        const allMeditationsListened = await req.db.collection('meditationListened').find({username:req.user.username})
+        res.status(200).send( allMeditationsListened)
+    }catch(e){
+        console.log(e);
+        res.status(400);
+        res.send("error recording meditation listened");
+    }
+})
+
 module.exports = meditationRouter;
