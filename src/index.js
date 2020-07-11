@@ -43,7 +43,7 @@ const connectToMongo = require('./db/mongo_client_db');
 const moodsRouter = require("./routers/moods-rotuer");
 
 let db;
-app.listen(3000, async () => {
+app.listen(process.env.PORT || 3000, async () => {
   try{
     connectionAccount = await MongoClient.connect(  //
       process.env.DATABASEURL
