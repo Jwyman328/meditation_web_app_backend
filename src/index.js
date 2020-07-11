@@ -3,6 +3,9 @@ const app = express();
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 require("dotenv").config();
+const helmet = require("helmet");
+
+app.use(helmet());
 var cors = require("cors");
 app.use(cors());
 // middleware 
