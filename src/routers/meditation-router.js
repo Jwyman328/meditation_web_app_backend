@@ -22,7 +22,7 @@ meditationRouter.post('/record-session-listened',async(req, res) =>{
 meditationRouter.get('/',async(req, res) =>{
     try{
         console.log(' i was hit')
-        const allMeditationsListened = await req.db.collection('meditationListened').find({username:req.user.username})
+        const allMeditationsListened = await req.db.collection('meditationListened').find({username:req.user.username}).toArray()
         res.status(200).send( allMeditationsListened)
     }catch(e){
         console.log(e);
