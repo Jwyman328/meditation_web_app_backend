@@ -1,13 +1,14 @@
 const express = require("express");
+var cors = require("cors");
+
 const app = express();
+app.use(cors());
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
 require("dotenv").config();
 const helmet = require("helmet");
 
 app.use(helmet());
-var cors = require("cors");
-app.use(cors());
 // middleware 
 const checkUserIsAuthenticated = require('./middlewares/checkUserIsAuthenticated')
 
