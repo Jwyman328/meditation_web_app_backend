@@ -2,7 +2,7 @@ const express = require("express");
 const meditationRouter = new express.Router();
 const meditationListened = require("../models/meditationListened");
 
-meditationRouter.post("/record-session-listened", async (req, res) => {
+meditationRouter.post("/", async (req, res) => { //record-session-listened
   try {
     const meditationListenedData = req.body;
     meditationListenedData.date_time_listened = new Date();
@@ -11,9 +11,8 @@ meditationRouter.post("/record-session-listened", async (req, res) => {
       meditationListenedData
     );
     const recordedMeditationListened = await req.db
-      .collection("meditationListened")
+      .collection("meditation-sessions")
       .insertOne(meditationListenedDataValidated);
-    console.log("created", recordedMeditationListened);
     res.status(201).send(recordedMeditationListened);
   } catch (e) {
     console.log(e);
@@ -24,9 +23,8 @@ meditationRouter.post("/record-session-listened", async (req, res) => {
 
 meditationRouter.get("/", async (req, res) => {
   try {
-    console.log(" i was hit");
     const allMeditationsListened = await req.db
-      .collection("meditationListened")
+      .collection("meditation-sessions")
       .find({ username: req.user.username }).sort( { date_time_listened
         : 1 } )
       .toArray();
